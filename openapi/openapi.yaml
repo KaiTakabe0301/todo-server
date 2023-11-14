@@ -1,0 +1,121 @@
+openapi: 3.0.0
+info:
+  title: Todo List API
+  version: 1.0.0
+servers:
+  - url: "http://localhost:8080"
+paths:
+  /todos:
+    get:
+      summary: Get a list of todos
+      responses:
+        "200":
+          description: A list of todos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Todo"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error400"
+    post:
+      summary: Create a new todo
+      requestBody:
+        description: Todo object that needs to be added
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Todo"
+      responses:
+        "200":
+          description: Successfully created a new todo
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error400"
+  /todos/{id}:
+    patch:
+      summary: Update a todo
+      parameters:
+        - name: id
+          in: path
+          description: ID of todo to update
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Todo object that needs to be updated
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Todo"
+      responses:
+        "200":
+          description: Successfully updated a todo
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error400"
+    delete:
+      summary: Delete a todo
+      parameters:
+        - name: id
+          in: path
+          description: ID of todo to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Successfully deleted a todo
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error400"
+
+components:
+  schemas:
+    Todo:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: integer
+          format: int64
+        title:
+          type: string
+        completed:
+          type: boolean
+        delete_flag:
+          type: boolean
+        deadline:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        created_at:
+          type: string
+          format: date-time
+
+    Error400:
+      type: object
+      properties:
+        message:
+          type: string
