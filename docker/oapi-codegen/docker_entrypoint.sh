@@ -23,6 +23,11 @@ while [[ $# -gt 0 ]]; do
             shift
             shift
             ;;
+        -generate)
+            generate="$2"
+            shift
+            shift
+            ;;
         *)
             echo "Invalid option '$1'"
             exit 1
@@ -30,4 +35,4 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-oapi-codegen -package $package $input > $output
+oapi-codegen -generate $generate -package $package $input > $output
