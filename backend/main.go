@@ -45,6 +45,20 @@ func main() {
 
 	todo.RegisterHandlers(e, s)
 
+	initialMessage(e)
+
 	// Start server
 	e.Logger.Fatal(e.Start(":8080"))
+}
+
+func initialMessage(e *echo.Echo) {
+	e.Logger.Info(`
+  ______     __   __     ______     __  __
+ /\  ___\   /\ "-.\ \   /\  __ \   /\ \_\ \
+ \ \ \____  \ \ \-.  \  \ \  __ \  \ \  __ \
+  \ \_____\  \ \_\\"\_\  \ \_\ \_\  \ \_\ \_\
+   \/_____/   \/_/ \/_/   \/_/\/_/   \/_/\/_/
+Echo server is running on http://localhost:8080
+`)
+
 }
